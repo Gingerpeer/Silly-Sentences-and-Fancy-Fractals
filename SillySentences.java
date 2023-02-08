@@ -79,28 +79,28 @@ public class SillySentences {
     // <noun_phrase> ::= <proper_noun> | <determiner> [ <adjective> ]. <common_noun> [ who <verb_phrase> ]
     private static String nounPhrase(int i) {
         String NounString = "";
-        if (i >= 0 && i < 16) {
+        if (i < 16) {
             NounString += properNoun();
         }
         if(i > 16 && i < 32) {
-            NounString += determiner() + " " + adjective() + " . " + commonNoun() + " who " + verbPhrase(i+1);
+            NounString += determiner() + " " + adjective() + " . " + commonNoun() + " who " + verbPhrase(i);
         }
         return NounString;
     }
     // <verb_phrase> ::= <intransitive_verb> | <transitive_verb> <noun_phrase>| is <adjective> | believes that <simple_sentence>
     private static String verbPhrase(int i) {
         String VerbString = "";
-        if(i >= 0 && i < 4){
+        if(i < 4){
             VerbString += intransitiveVerb();
         }
         if(i > 4 && i < 8){
-            VerbString += transitiveVerb() + " " + nounPhrase(i+1);
+            VerbString += transitiveVerb() + " " + nounPhrase(i);
         }
         if(i > 8 && i < 16){
             VerbString += "is " + adjective();
         }
         if(i > 16 && i < 32){
-            VerbString += "believes that " + simpleSentence(i+1);
+            VerbString += "believes that " + simpleSentence(i);
         }
         return VerbString;
     }
@@ -109,7 +109,11 @@ public class SillySentences {
     }
     // sentence = simple sentence + noun phrase + verb phrase + conjunction + proper noun + common noun + determiner + adjective + intransitive verb + transitive verb.
     private static String sentence() {
-        return simpleSentence(0) + " " + nounPhrase(0) + " " + verbPhrase(0) + " " + conjunction() + " " + properNoun() + " " + commonNoun() + " " + determiner() + " " + adjective() + " " + intransitiveVerb() + " " + transitiveVerb();
+        String sentence = "";
+        for (int i = 0; i < 4; i++) {
+            sentence += simpleSentence(i) + " " + nounPhrase(i) + " " + verbPhrase(i) + " " + conjunction() + " " + properNoun() + " " + commonNoun() + " " + determiner() + " " + adjective() + " " + intransitiveVerb() + " " + transitiveVerb()+". ";
+        }
+        return sentence;
     }
     // create a main method to test the methods
     public static void main(String[] args) {
